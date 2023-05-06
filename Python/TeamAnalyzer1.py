@@ -18,21 +18,35 @@ for i, arg in enumerate(sys.argv):
     if i == 0:
         continue
 
-
-pokedex_number = []
-for pokedex_number in pokedex_number:
-    cur.execute("SELECT pokedex_number FROM pokemon WHERE pokedex_number = ? ", (pokedex_number, ) )
+pokedex_numbers = [1, 2, 3, 4, 5, 6]
+for pokedex_number in pokedex_numbers:
+    cur.execute("SELECT name FROM pokemon WHERE pokedex_number = ?", (pokedex_number,))
     row = cur.fetchone()
     print(f"Pokedex number {pokedex_number} is {row[0]}")
 
-a = 33
-b = 200
-if b > a:
-    print("b is greater than 1")
-    
+
+pokedex_numbers = [1, 2, 3, 4, 5, 6]
+pokemon_names = {}
+
+# Loop over the Pokedex numbers and retrieve the corresponding Pokemon name
+for pokedex_number in pokedex_numbers:
+    cur.execute("SELECT name FROM pokemon WHERE pokedex_number = ?", (pokedex_number,))
+    row = cur.fetchone()
+    if row is not None:
+        pokemon_names[pokedex_number] = row[0]
+    else:
+        print(f"No Pokemon found with Pokedex number {pokedex_number}")
+
+# Print the dictionary to verify the mapping
+print(pokemon_names)
+
+pokedex_numbers = [1, 2, 3, 4, 5, 6]
+pokemon_info = {}
 
 
-cur.execute()
+
+
+
     # Analyze the pokemon whose pokedex_number is in "arg"
 
     # You will need to write the SQL, extract the results, and compare
