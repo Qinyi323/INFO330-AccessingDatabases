@@ -28,20 +28,33 @@ for pokedex_number in pokedex_numbers:
 pokedex_numbers = [1, 2, 3, 4, 5, 6]
 pokemon_names = {}
 
-# Loop over the Pokedex numbers and retrieve the corresponding Pokemon name
 for pokedex_number in pokedex_numbers:
     cur.execute("SELECT name FROM pokemon WHERE pokedex_number = ?", (pokedex_number,))
     row = cur.fetchone()
     if row is not None:
         pokemon_names[pokedex_number] = row[0]
-    else:
-        print(f"No Pokemon found with Pokedex number {pokedex_number}")
-
-# Print the dictionary to verify the mapping
 print(pokemon_names)
 
+
+
 pokedex_numbers = [1, 2, 3, 4, 5, 6]
-pokemon_info = {}
+pokemon_data = {}
+
+for pokedex_number in pokedex_numbers:
+    cur.execute("SELECT name FROM pokemon WHERE pokedex_number = ?", (pokedex_number,))
+    row = cur.fetchone()
+    if row is not None:
+        pokemon_name = row[0]
+        cur.execute("SELECT type1, type2 FROM pokemon_types_view WHERE pokedex_number = ?", (pokedex_number,))
+        row = cur.fetchone()
+        if row is not None:
+            pokemon_types = [row[0]]
+            if row[1] is not None:
+                pokemon_types.append(row[1])
+            pokemon_data[pokemon_name] = pokemon_types
+print(pokemon_data)
+
+
 
 
 
